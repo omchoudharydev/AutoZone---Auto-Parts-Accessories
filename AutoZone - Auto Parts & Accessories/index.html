@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoZone - Auto Parts & Accessories | Task WD-EC-006</title>
+  
+  <!-- Font Awesome Icons & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-banner">
+    <div class="container top-banner-content">
+      <span><i class="fa-solid fa-truck-fast"></i> Free Ground Shipping on Orders Over $75 | Code: <strong>DATAALCOTT15</strong></span>
+      <div class="top-banner-links">
+        <a href="#track-section" onclick="navigateTo('tracking')"><i class="fa-solid fa-location-crosshairs"></i> Track Order</a>
+        <a href="#contact" onclick="navigateTo('contact')"><i class="fa-solid fa-headset"></i> Support (24/7)</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="header">
+    <div class="container navbar">
+      <div class="nav-brand" onclick="navigateTo('home')">
+        <i class="fa-solid fa-gears logo-icon"></i>
+        <div class="brand-text">
+          <span class="brand-name">AUTO<span class="text-accent">ZONE</span></span>
+          <span class="brand-sub">PARTS & ACCESSORIES</span>
+        </div>
+      </div>
+
+      <!-- Quick Search Bar -->
+      <div class="nav-search-bar">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="globalSearchInput" placeholder="Search 200,000+ auto parts, Bosch, brake pads..." onkeyup="handleGlobalSearch(event)">
+        <button class="btn btn-accent btn-search" onclick="triggerSearch()">Search</button>
+      </div>
+
+      <!-- Header Vehicle Selection Badge & Actions -->
+      <div class="nav-actions">
+        <button class="nav-btn vehicle-btn" onclick="openVehicleModal()">
+          <i class="fa-solid fa-car-side"></i>
+          <div class="vehicle-badge-text">
+            <span class="vehicle-label">My Vehicle:</span>
+            <span class="vehicle-val" id="activeVehicleDisplay">Select Garage Car</span>
+          </div>
+        </button>
+
+        <button class="nav-btn icon-btn" onclick="navigateTo('account', 'wishlist')" title="Wishlist">
+          <i class="fa-regular fa-heart"></i>
+          <span class="counter-badge" id="wishlistCount">0</span>
+        </button>
+
+        <button class="nav-btn icon-btn" onclick="openCartDrawer()" title="Shopping Cart">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span class="counter-badge" id="cartCount">0</span>
+        </button>
+
+        <button class="nav-btn user-btn" onclick="navigateTo('account')" title="Account Profile">
+          <i class="fa-regular fa-circle-user"></i>
+          <span class="user-name" id="navUserName">Sign In</span>
+        </button>
+
+        <button class="mobile-toggle" onclick="toggleMobileMenu()">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Category Sub-Nav Strip -->
+    <nav class="category-strip">
+      <div class="container subnav-links">
+        <a href="#home" class="sublink" onclick="navigateTo('home')"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="#catalog" class="sublink" onclick="filterByCategory('all')"><i class="fa-solid fa-border-all"></i> All Products</a>
+        <a href="#engine" class="sublink" onclick="filterByCategory('engine')"><i class="fa-solid fa-car-battery"></i> Engine Parts</a>
+        <a href="#brakes" class="sublink" onclick="filterByCategory('brakes')"><i class="fa-solid fa-compact-disc"></i> Brakes & Tires</a>
+        <a href="#lighting" class="sublink" onclick="filterByCategory('lighting')"><i class="fa-solid fa-lightbulb"></i> Lighting & Electrical</a>
+        <a href="#accessories" class="sublink" onclick="filterByCategory('accessories')"><i class="fa-solid fa-screwdriver-wrench"></i> Accessories</a>
+        <a href="#about" class="sublink" onclick="navigateTo('about')">About Us</a>
+        <a href="#contact" class="sublink" onclick="navigateTo('contact')">Contact Us</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-header">
+      <span class="brand-name">AUTO<span class="text-accent">ZONE</span></span>
+      <button class="close-btn" onclick="toggleMobileMenu()">&times;</button>
+    </div>
+    <div class="mobile-links">
+      <a href="#home" onclick="navigateTo('home'); toggleMobileMenu();">Home</a>
+      <a href="#catalog" onclick="filterByCategory('all'); toggleMobileMenu();">Browse All Parts</a>
+      <a href="#engine" onclick="filterByCategory('engine'); toggleMobileMenu();">Engine Parts</a>
+      <a href="#brakes" onclick="filterByCategory('brakes'); toggleMobileMenu();">Brakes & Tires</a>
+      <a href="#lighting" onclick="filterByCategory('lighting'); toggleMobileMenu();">Lighting & Electrical</a>
+      <a href="#accessories" onclick="filterByCategory('accessories'); toggleMobileMenu();">Interior/Exterior Accessories</a>
+      <a href="#track" onclick="navigateTo('tracking'); toggleMobileMenu();">Track My Order</a>
+      <a href="#account" onclick="navigateTo('account'); toggleMobileMenu();">My Account & Garage</a>
+      <a href="#about" onclick="navigateTo('about'); toggleMobileMenu();">About AutoZone</a>
+      <a href="#contact" onclick="navigateTo('contact'); toggleMobileMenu();">Contact Support</a>
+    </div>
+  </div>
+
+  <main id="mainContainer">
+
+    <!-- VIEW 1: HOME PAGE -->
+    <section id="view-home" class="page-view active-view">
+      
+      <!-- Hero Showcase -->
+      <div class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+          <div class="hero-text-col">
+            <span class="hero-tag"><i class="fa-solid fa-shield-halved"></i> OEM & High-Performance Aftermarket Spares</span>
+            <h1 class="hero-title">Keep Your Ride Running with the <span class="text-accent">Right Parts</span></h1>
+            <p class="hero-desc">Over 200,000 precision auto parts in stock. Guaranteed exact fit for sedans, SUVs, trucks, and sports vehicles with same-day dispatch.</p>
+            <div class="hero-ctas">
+              <button class="btn btn-accent btn-lg" onclick="filterByCategory('all')">Shop Parts Catalog <i class="fa-solid fa-arrow-right"></i></button>
+              <button class="btn btn-outline btn-lg" onclick="openVehicleModal()"><i class="fa-solid fa-wrench"></i> Check Fitment</button>
+            </div>
+          </div>
+
+          <!-- Fast Vehicle Selector Widget -->
+          <div class="hero-widget-col">
+            <div class="vehicle-picker-card">
+              <div class="widget-header">
+                <i class="fa-solid fa-car-rear text-accent"></i>
+                <div>
+                  <h3>Find Parts for Your Vehicle</h3>
+                  <p>Guaranteed Exact Fit Guarantee</p>
+                </div>
+              </div>
+              <form id="heroVehicleForm" onsubmit="handleHeroVehicleSubmit(event)">
+                <div class="form-group">
+                  <label>Select Year</label>
+                  <select id="heroYear" class="form-control" onchange="populateModels()">
+                    <option value="">Choose Year</option>
+                    <option value="2026">2026</option>
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Select Make</label>
+                  <select id="heroMake" class="form-control" onchange="populateModels()">
+                    <option value="">Choose Make</option>
+                    <option value="Toyota">Toyota</option>
+                    <option value="Honda">Honda</option>
+                    <option value="Ford">Ford</option>
+                    <option value="Chevrolet">Chevrolet</option>
+                    <option value="BMW">BMW</option>
+                    <option value="Hyundai">Hyundai</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Select Model</label>
+                  <select id="heroModel" class="form-control">
+                    <option value="">Select Make First</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-accent btn-block"><i class="fa-solid fa-magnifying-glass"></i> View Matching Parts</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trust Badges Strip -->
+      <div class="trust-banner">
+        <div class="container trust-grid">
+          <div class="trust-item">
+            <i class="fa-solid fa-truck-ramp-box"></i>
+            <div>
+              <h4>Fast & Free Delivery</h4>
+              <p>On orders above $75 across the country</p>
+            </div>
+          </div>
+          <div class="trust-item">
+            <i class="fa-solid fa-check-double"></i>
+            <div>
+              <h4>100% Fit Guarantee</h4>
+              <p>Hassle-free 30-day parts exchange</p>
+            </div>
+          </div>
+          <div class="trust-item">
+            <i class="fa-solid fa-certificate"></i>
+            <div>
+              <h4>Certified OEM & ISO</h4>
+              <p>Direct from verified manufacturers</p>
+            </div>
+          </div>
+          <div class="trust-item">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            <div>
+              <h4>Expert Diagnostics</h4>
+              <p>24/7 ASE Certified mechanical guidance</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured Categories Section -->
+      <div class="container section">
+        <div class="section-head">
+          <div>
+            <span class="section-tag">EXPLORE CATEGORIES</span>
+            <h2 class="section-title">Shop by Automotive Department</h2>
+          </div>
+          <button class="btn btn-outline" onclick="filterByCategory('all')">View All Departments <i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+
+        <div class="categories-grid">
+          <div class="category-card" onclick="filterByCategory('engine')">
+            <div class="cat-image cat-bg-engine"></div>
+            <div class="cat-info">
+              <span class="cat-icon"><i class="fa-solid fa-oil-can"></i></span>
+              <h3>Engine Parts</h3>
+              <p>Oil filters, air intake, sensors, alternators, spark plugs</p>
+              <span class="cat-link">Explore Engine <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
+          </div>
+
+          <div class="category-card" onclick="filterByCategory('brakes')">
+            <div class="cat-image cat-bg-brakes"></div>
+            <div class="cat-info">
+              <span class="cat-icon"><i class="fa-solid fa-compact-disc"></i></span>
+              <h3>Brakes & Tires</h3>
+              <p>Ceramic pads, drilled rotors, tire monitors, brake fluid</p>
+              <span class="cat-link">Explore Brakes <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
+          </div>
+
+          <div class="category-card" onclick="filterByCategory('lighting')">
+            <div class="cat-image cat-bg-lighting"></div>
+            <div class="cat-info">
+              <span class="cat-icon"><i class="fa-solid fa-lightbulb"></i></span>
+              <h3>Lighting & Electrical</h3>
+              <p>LED headlamps, fog pods, relays, AGM batteries & switches</p>
+              <span class="cat-link">Explore Lighting <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
+          </div>
+
+          <div class="category-card" onclick="filterByCategory('accessories')">
+            <div class="cat-image cat-bg-accessories"></div>
+            <div class="cat-info">
+              <span class="cat-icon"><i class="fa-solid fa-car-tunnel"></i></span>
+              <h3>Interior & Exterior</h3>
+              <p>All-weather floor liners, seat shields, phone mounts, covers</p>
+              <span class="cat-link">Explore Accessories <i class="fa-solid fa-arrow-right"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Featured / Deals Section -->
+      <div class="deals-section">
+        <div class="container section">
+          <div class="section-head">
+            <div>
+              <span class="section-tag text-accent"><i class="fa-solid fa-bolt"></i> HOT DEALS & ESSENTIALS</span>
+              <h2 class="section-title text-white">Recommended Replacement Spares</h2>
+            </div>
+            <button class="btn btn-accent" onclick="filterByCategory('all')">Browse Catalog</button>
+          </div>
+          <div class="products-grid" id="homeFeaturedGrid">
+            <!-- Populated via JavaScript -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: PRODUCT LISTING / CATALOG PAGE -->
+    <section id="view-catalog" class="page-view">
+      <div class="container section">
+        
+        <div class="catalog-breadcrumbs">
+          <span onclick="navigateTo('home')">Home</span> &gt; 
+          <span class="active-crumb" id="catalogBreadcrumb">All Auto Parts</span>
+        </div>
+
+        <div class="catalog-layout">
+          <!-- Sidebar Filters -->
+          <aside class="catalog-sidebar">
+            <div class="filter-box">
+              <div class="filter-header">
+                <h3><i class="fa-solid fa-sliders"></i> Filter Parts</h3>
+                <button class="btn-text-clear" onclick="resetFilters()">Reset All</button>
+              </div>
+
+              <!-- Vehicle Match Active Status Filter -->
+              <div class="filter-group compatibility-filter-box">
+                <label class="filter-title">My Vehicle Compatibility</label>
+                <div class="current-vehicle-status" id="sidebarVehicleNotice">
+                  <span>No vehicle selected</span>
+                  <button class="btn-xs" onclick="openVehicleModal()">Set Car</button>
+                </div>
+                <label class="checkbox-container">
+                  <input type="checkbox" id="onlyCompatibleCheckbox" onchange="applyFilters()">
+                  <span class="checkmark"></span>
+                  Show guaranteed fit only
+                </label>
+              </div>
+
+              <!-- Category Filter -->
+              <div class="filter-group">
+                <label class="filter-title">Category</label>
+                <div class="radio-pill-list">
+                  <button class="cat-pill active" data-cat="all" onclick="setCategoryFilter('all', this)">All</button>
+                  <button class="cat-pill" data-cat="engine" onclick="setCategoryFilter('engine', this)">Engine</button>
+                  <button class="cat-pill" data-cat="brakes" onclick="setCategoryFilter('brakes', this)">Brakes & Tires</button>
+                  <button class="cat-pill" data-cat="lighting" onclick="setCategoryFilter('lighting', this)">Lighting</button>
+                  <button class="cat-pill" data-cat="accessories" onclick="setCategoryFilter('accessories', this)">Accessories</button>
+                </div>
+              </div>
+
+              <!-- Vehicle Body Type Filter -->
+              <div class="filter-group">
+                <label class="filter-title">Vehicle Body Type</label>
+                <div class="checkbox-list">
+                  <label class="checkbox-container">
+                    <input type="checkbox" value="Sedan" class="filter-body-type" onchange="applyFilters()">
+                    <span class="checkmark"></span> Sedan
+                  </label>
+                  <label class="checkbox-container">
+                    <input type="checkbox" value="SUV" class="filter-body-type" onchange="applyFilters()">
+                    <span class="checkmark"></span> SUV / Crossover
+                  </label>
+                  <label class="checkbox-container">
+                    <input type="checkbox" value="Truck" class="filter-body-type" onchange="applyFilters()">
+                    <span class="checkmark"></span> Truck / Heavy Duty
+                  </label>
+                  <label class="checkbox-container">
+                    <input type="checkbox" value="Universal" class="filter-body-type" onchange="applyFilters()">
+                    <span class="checkmark"></span> Universal Fit
+                  </label>
+                </div>
+              </div>
+
+              <!-- Brand Filter -->
+              <div class="filter-group">
+                <label class="filter-title">Brand Manufacturer</label>
+                <div class="checkbox-list" id="brandFilterList">
+                  <!-- Dynamically rendered -->
+                </div>
+              </div>
+
+              <!-- Price Range Filter -->
+              <div class="filter-group">
+                <label class="filter-title">Max Price: <strong id="priceRangeVal">$250</strong></label>
+                <input type="range" id="priceRangeInput" min="10" max="300" step="5" value="300" oninput="handlePriceSlider(this.value)">
+                <div class="price-range-limits">
+                  <span>$10</span>
+                  <span>$300</span>
+                </div>
+              </div>
+
+              <!-- Rating Filter -->
+              <div class="filter-group">
+                <label class="filter-title">Minimum Rating</label>
+                <select id="ratingFilterSelect" class="form-control" onchange="applyFilters()">
+                  <option value="0">Any Rating</option>
+                  <option value="4.5">4.5+ Stars & Up</option>
+                  <option value="4.0">4.0+ Stars & Up</option>
+                  <option value="3.5">3.5+ Stars & Up</option>
+                </select>
+              </div>
+
+            </div>
+          </aside>
+
+          <!-- Catalog Main Product Area -->
+          <div class="catalog-main">
+            <div class="catalog-toolbar">
+              <div class="toolbar-left">
+                <h2 id="catalogCategoryHeading">All Automotive Parts</h2>
+                <span class="catalog-result-count" id="catalogResultCount">Showing 0 parts</span>
+              </div>
+              <div class="toolbar-right">
+                <label for="catalogSortSelect">Sort By:</label>
+                <select id="catalogSortSelect" class="form-control" onchange="applyFilters()">
+                  <option value="featured">Featured First</option>
+                  <option value="price-asc">Price: Low to High</option>
+                  <option value="price-desc">Price: High to Low</option>
+                  <option value="rating-desc">Customer Rating</option>
+                  <option value="name-asc">Alphabetical (A-Z)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- In-grid Active Garage notification -->
+            <div id="garageNoticeCard" class="garage-alert-strip hidden">
+              <i class="fa-solid fa-circle-check"></i>
+              <div>
+                <span>Filtering for: <strong id="garageNoticeVehicleName">2024 Toyota Camry</strong>. Parts verified with our fitment database.</span>
+              </div>
+              <button class="btn-xs btn-outline" onclick="openVehicleModal()">Change Vehicle</button>
+            </div>
+
+            <!-- The Grid Container -->
+            <div class="products-grid" id="catalogProductsGrid">
+              <!-- Dynamically rendered -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="noProductsFound" class="empty-state hidden">
+              <i class="fa-solid fa-screwdriver-wrench empty-icon"></i>
+              <h3>No matching automotive parts found</h3>
+              <p>Try widening your search keywords, raising your price limit, or clearing the selected vehicle filter.</p>
+              <button class="btn btn-accent" onclick="resetFilters()">Reset All Filters</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- VIEW 3: CHECKOUT PAGE -->
+    <section id="view-checkout" class="page-view">
+      <div class="container section">
+        <div class="section-head">
+          <div>
+            <span class="section-tag"><i class="fa-solid fa-lock"></i> 256-BIT ENCRYPTED CHECKOUT</span>
+            <h2 class="section-title">Complete Your Order</h2>
+          </div>
+          <button class="btn btn-outline" onclick="navigateTo('catalog')"><i class="fa-solid fa-arrow-left"></i> Return to Shopping</button>
+        </div>
+
+        <div class="checkout-grid">
+          <!-- Checkout Steps & Form -->
+          <div class="checkout-form-container">
+            <form id="checkoutForm" onsubmit="handlePlaceOrder(event)">
+              
+              <!-- Step 1: Shipping Address -->
+              <div class="checkout-step-card">
+                <div class="step-badge">1</div>
+                <div class="step-body">
+                  <h3>Shipping & Delivery Address</h3>
+                  <div class="form-row">
+                    <div class="form-group half">
+                      <label>First Name *</label>
+                      <input type="text" class="form-control" id="billFirstName" required placeholder="John">
+                    </div>
+                    <div class="form-group half">
+                      <label>Last Name *</label>
+                      <input type="text" class="form-control" id="billLastName" required placeholder="Doe">
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group half">
+                      <label>Email Address *</label>
+                      <input type="email" class="form-control" id="billEmail" required placeholder="john@example.com">
+                    </div>
+                    <div class="form-group half">
+                      <label>Phone Number *</label>
+                      <input type="tel" class="form-control" id="billPhone" required placeholder="+1 (555) 019-2834">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Street Address *</label>
+                    <input type="text" class="form-control" id="billAddress" required placeholder="1482 Industrial Parkway, Suite B">
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group third">
+                      <label>City *</label>
+                      <input type="text" class="form-control" id="billCity" required placeholder="Detroit">
+                    </div>
+                    <div class="form-group third">
+                      <label>State / Province *</label>
+                      <input type="text" class="form-control" id="billState" required placeholder="MI">
+                    </div>
+                    <div class="form-group third">
+                      <label>Postal / ZIP Code *</label>
+                      <input type="text" class="form-control" id="billZip" required placeholder="48201">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 2: Shipping Method -->
+              <div class="checkout-step-card">
+                <div class="step-badge">2</div>
+                <div class="step-body">
+                  <h3>Select Shipping Carrier</h3>
+                  <div class="shipping-options">
+                    <label class="shipping-option">
+                      <input type="radio" name="shippingMethod" value="0" checked onchange="updateCheckoutCalculations()">
+                      <div class="ship-details">
+                        <span class="ship-name">Standard Ground Courier (3-5 Days)</span>
+                        <span class="ship-price">FREE (Orders $75+) / $8.95</span>
+                      </div>
+                    </label>
+                    <label class="shipping-option">
+                      <input type="radio" name="shippingMethod" value="18" onchange="updateCheckoutCalculations()">
+                      <div class="ship-details">
+                        <span class="ship-name">Express Heavy Freight (Next-Day Priority)</span>
+                        <span class="ship-price">$18.00</span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Step 3: Payment Gateway Simulation -->
+              <div class="checkout-step-card">
+                <div class="step-badge">3</div>
+                <div class="step-body">
+                  <h3>Payment Method Simulation</h3>
+                  <p class="text-muted text-sm">Secure simulated sandbox. No real card charge will occur.</p>
+                  
+                  <div class="payment-tabs">
+                    <button type="button" class="pay-tab active" onclick="switchPaymentMode('card', this)">
+                      <i class="fa-regular fa-credit-card"></i> Credit / Debit Card
+                    </button>
+                    <button type="button" class="pay-tab" onclick="switchPaymentMode('upi', this)">
+                      <i class="fa-solid fa-qrcode"></i> UPI / QR Scan
+                    </button>
+                    <button type="button" class="pay-tab" onclick="switchPaymentMode('cod', this)">
+                      <i class="fa-solid fa-hand-holding-dollar"></i> Cash on Delivery
+                    </button>
+                  </div>
+
+                  <!-- Card Panel -->
+                  <div id="payPanelCard" class="payment-panel active">
+                    <div class="form-group">
+                      <label>Cardholder Name</label>
+                      <input type="text" class="form-control" placeholder="John Doe" value="John Doe">
+                    </div>
+                    <div class="form-group">
+                      <label>Card Number</label>
+                      <input type="text" class="form-control" placeholder="4532 •••• •••• 8920" value="4532 8840 1928 8920">
+                    </div>
+                    <div class="form-row">
+                      <div class="form-group half">
+                        <label>Expiration Date</label>
+                        <input type="text" class="form-control" placeholder="MM/YY" value="08/28">
+                      </div>
+                      <div class="form-group half">
+                        <label>Security Code (CVV)</label>
+                        <input type="password" class="form-control" maxlength="4" placeholder="•••" value="842">
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- UPI Panel -->
+                  <div id="payPanelUPI" class="payment-panel">
+                    <div class="upi-mock-box">
+                      <i class="fa-solid fa-qrcode upi-qr"></i>
+                      <p>Scan with Google Pay, PhonePe, or BHIM</p>
+                      <span class="upi-id-badge">autozone.pay@okaxis</span>
+                    </div>
+                  </div>
+
+                  <!-- COD Panel -->
+                  <div id="payPanelCOD" class="payment-panel">
+                    <div class="cod-box">
+                      <i class="fa-solid fa-truck-ramp-box"></i>
+                      <p>Pay cash or card upon delivery. An OTP verification is required at your doorstep.</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-accent btn-lg btn-block" id="btnPlaceOrder">
+                <i class="fa-solid fa-lock"></i> Authorize & Place Order (<span id="checkoutSubmitTotal">$0.00</span>)
+              </button>
+            </form>
+          </div>
+
+          <!-- Checkout Order Summary -->
+          <div class="checkout-summary-container">
+            <div class="summary-card">
+              <h3>Order Summary</h3>
+              <div class="checkout-items-list" id="checkoutItemsList">
+                <!-- Dynamically populated -->
+              </div>
+
+              <!-- Promo Code Input -->
+              <div class="promo-box">
+                <input type="text" id="promoCodeInput" placeholder="Promo code (e.g. DATAALCOTT15)">
+                <button type="button" class="btn btn-navy" onclick="applyPromoCode()">Apply</button>
+              </div>
+              <div id="promoFeedback" class="promo-feedback"></div>
+
+              <div class="order-totals-table">
+                <div class="total-row">
+                  <span>Parts Subtotal</span>
+                  <span id="checkoutSubtotal">$0.00</span>
+                </div>
+                <div class="total-row">
+                  <span>Shipping Cost</span>
+                  <span id="checkoutShipping">$0.00</span>
+                </div>
+                <div class="total-row">
+                  <span>Estimated Tax (8%)</span>
+                  <span id="checkoutTax">$0.00</span>
+                </div>
+                <div class="total-row discount-row hidden" id="checkoutDiscountRow">
+                  <span>Discount Code</span>
+                  <span id="checkoutDiscount">-$0.00</span>
+                </div>
+                <div class="total-row grand-total">
+                  <span>Grand Total</span>
+                  <span id="checkoutGrandTotal" class="text-accent">$0.00</span>
+                </div>
+              </div>
+
+              <div class="summary-guarantee">
+                <i class="fa-solid fa-award"></i>
+                <p>Protected by AutoZone 100% Fit Guarantee & Manufacturer 1-Year Warranty.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- VIEW 4: ORDER TRACKING (BONUS FEATURE) -->
+    <section id="view-tracking" class="page-view">
+      <div class="container section">
+        <div class="tracking-container">
+          <div class="section-head text-center">
+            <span class="section-tag"><i class="fa-solid fa-box-open"></i> LIVE LOGISTICS DISPATCH</span>
+            <h2 class="section-title">Track Your AutoZone Shipment</h2>
+            <p class="text-muted">Enter your AutoZone Order Number (e.g., <strong>AZ-84920</strong>) to view real-time fulfillment status.</p>
+          </div>
+
+          <div class="track-search-box">
+            <input type="text" id="trackingSearchInput" placeholder="Enter Order ID (e.g. AZ-84920)">
+            <button class="btn btn-accent" onclick="handleTrackSearch()"><i class="fa-solid fa-truck-fast"></i> Track Package</button>
+          </div>
+
+          <!-- Dynamic Tracking Result Container -->
+          <div id="trackingResultArea" class="tracking-result-area hidden">
+            <!-- Populated via JavaScript -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 5: USER ACCOUNT & GARAGE PAGE -->
+    <section id="view-account" class="page-view">
+      <div class="container section">
+        
+        <div class="account-header">
+          <div class="account-avatar">
+            <i class="fa-solid fa-user-astronaut"></i>
+          </div>
+          <div class="account-meta">
+            <h2 id="profileFullName">Alex Mercer</h2>
+            <p><i class="fa-regular fa-envelope"></i> <span id="profileEmail">alex.mercer@speedworks.com</span> | <i class="fa-solid fa-wrench"></i> Primary: <strong id="profileCarName">2024 Toyota Camry</strong></p>
+          </div>
+          <button class="btn btn-outline" onclick="logoutUser()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out</button>
+        </div>
+
+        <div class="account-tabs">
+          <button class="acc-tab active" onclick="switchAccountTab('garage', this)"><i class="fa-solid fa-warehouse"></i> My Garage</button>
+          <button class="acc-tab" onclick="switchAccountTab('orders', this)"><i class="fa-solid fa-boxes-packing"></i> Order History</button>
+          <button class="acc-tab" onclick="switchAccountTab('wishlist', this)"><i class="fa-solid fa-heart"></i> Saved Wishlist</button>
+          <button class="acc-tab" onclick="switchAccountTab('settings', this)"><i class="fa-solid fa-gear"></i> Profile Settings</button>
+        </div>
+
+        <!-- Garage Tab -->
+        <div id="accTab-garage" class="acc-panel active">
+          <div class="panel-head">
+            <div>
+              <h3>Saved Vehicles in Your Garage</h3>
+              <p>Manage your fleet to get guaranteed fitment across all automotive parts.</p>
+            </div>
+            <button class="btn btn-accent" onclick="openVehicleModal()"><i class="fa-solid fa-plus"></i> Add New Vehicle</button>
+          </div>
+          <div class="garage-cards-grid" id="garageCardsContainer">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Orders Tab -->
+        <div id="accTab-orders" class="acc-panel">
+          <div class="panel-head">
+            <h3>Past Orders & Receipts</h3>
+            <p>Track packages, print invoices, and view shipment histories.</p>
+          </div>
+          <div class="orders-table-wrapper" id="orderHistoryContainer">
+            <!-- Dynamically rendered -->
+          </div>
+        </div>
+
+        <!-- Wishlist Tab -->
+        <div id="accTab-wishlist" class="acc-panel">
+          <div class="panel-head">
+            <h3>Saved Items for Later</h3>
+            <p>Save parts for upcoming maintenance schedules and seasonal tune-ups.</p>
+          </div>
+          <div class="products-grid" id="wishlistGrid">
+            <!-- Dynamically rendered -->
+          </div>
+        </div>
+
+        <!-- Profile Settings Tab -->
+        <div id="accTab-settings" class="acc-panel">
+          <div class="panel-head">
+            <h3>Profile & Notification Preferences</h3>
+          </div>
+          <form class="account-settings-form" onsubmit="handleSaveSettings(event)">
+            <div class="form-row">
+              <div class="form-group half">
+                <label>Full Name</label>
+                <input type="text" id="settingsName" class="form-control" value="Alex Mercer">
+              </div>
+              <div class="form-group half">
+                <label>Email Address</label>
+                <input type="email" id="settingsEmail" class="form-control" value="alex.mercer@speedworks.com">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group half">
+                <label>Preferred Delivery Depot</label>
+                <input type="text" class="form-control" value="Detroit Central Distribution Hub">
+              </div>
+              <div class="form-group half">
+                <label>Contact Phone</label>
+                <input type="tel" class="form-control" value="+1 (313) 555-0199">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-accent">Save Changes</button>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- VIEW 6: ABOUT US PAGE -->
+    <section id="view-about" class="page-view">
+      <div class="container section">
+        <div class="about-hero">
+          <span class="section-tag">BUILT BY MOTORHEADS, FOR MOTORHEADS</span>
+          <h1 class="section-title">Reliable Parts. Engineered Precision.</h1>
+          <p class="about-intro">
+            AutoZone is a high-octane automotive parts distributor providing OEM and performance aftermarket components. 
+            From Sunday garage builders to professional race mechanics, our mission is to ensure every vehicle operates at peak performance, safety, and durability.
+          </p>
+        </div>
+
+        <div class="about-stats-grid">
+          <div class="stat-card">
+            <h2>200,000+</h2>
+            <p>Parts in Verified Inventory</p>
+          </div>
+          <div class="stat-card">
+            <h2>99.8%</h2>
+            <p>Fitment Accuracy Rate</p>
+          </div>
+          <div class="stat-card">
+            <h2>48 State</h2>
+            <p>Next-Day Distribution Depots</p>
+          </div>
+          <div class="stat-card">
+            <h2>24/7</h2>
+            <p>Certified ASE Master Techs</p>
+          </div>
+        </div>
+
+        <div class="about-mission-grid">
+          <div class="mission-card">
+            <i class="fa-solid fa-bullseye text-accent"></i>
+            <h3>Our Mission</h3>
+            <p>To eliminate vehicle downtime by pairing intelligent vehicle fitment technology with uncompromising industrial-grade replacement parts.</p>
+          </div>
+          <div class="mission-card">
+            <i class="fa-solid fa-gem text-accent"></i>
+            <h3>Guaranteed Reliability</h3>
+            <p>Every rotor, filter, sensor, and coil pack undergoes rigorous endurance tests exceeding SAE International standards.</p>
+          </div>
+          <div class="mission-card">
+            <i class="fa-solid fa-users-gear text-accent"></i>
+            <h3>Engineering Leadership</h3>
+            <p>Developed as part of the Free Web Development Internship Online Task (WD-EC-006) for Data Alcott Systems.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 7: CONTACT US PAGE -->
+    <section id="view-contact" class="page-view">
+      <div class="container section">
+        <div class="section-head text-center">
+          <span class="section-tag"><i class="fa-solid fa-headset"></i> WE ARE READY TO ASSIST</span>
+          <h2 class="section-title">Contact AutoZone Support</h2>
+          <p class="text-muted">Need help locating a rare part or verifying engine VIN compatibility? Speak with our mechanical specialists.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-info-card">
+            <h3>Distribution Headquarters</h3>
+            <div class="info-row">
+              <i class="fa-solid fa-location-dot text-accent"></i>
+              <div>
+                <strong>Global Dispatch Depot:</strong>
+                <p>Data Alcott Systems Campus, Tech Zone, Chennai, India</p>
+              </div>
+            </div>
+            <div class="info-row">
+              <i class="fa-solid fa-phone text-accent"></i>
+              <div>
+                <strong>Customer Assistance Hotline:</strong>
+                <p>+91 9600095045 / 1-800-AUTOZONE</p>
+              </div>
+            </div>
+            <div class="info-row">
+              <i class="fa-solid fa-envelope text-accent"></i>
+              <div>
+                <strong>Direct Correspondence:</strong>
+                <p>mail@freeinternships.in</p>
+              </div>
+            </div>
+            <div class="info-row">
+              <i class="fa-solid fa-clock text-accent"></i>
+              <div>
+                <strong>Dispatch Hours:</strong>
+                <p>Monday – Saturday: 11:00 AM – 5:00 PM IST</p>
+              </div>
+            </div>
+
+            <div class="contact-badge-strip">
+              <div class="badge-pill"><i class="fa-solid fa-shield-halved"></i> 100% Genuine Parts</div>
+              <div class="badge-pill"><i class="fa-solid fa-rotate-left"></i> 30-Day Hassle-Free Returns</div>
+            </div>
+          </div>
+
+          <div class="contact-form-card">
+            <h3>Send Mechanical Inquiry</h3>
+            <form id="contactForm" onsubmit="handleContactSubmit(event)">
+              <div class="form-row">
+                <div class="form-group half">
+                  <label>Your Name *</label>
+                  <input type="text" class="form-control" required placeholder="Alex Mercer">
+                </div>
+                <div class="form-group half">
+                  <label>Email Address *</label>
+                  <input type="email" class="form-control" required placeholder="alex@speedworks.com">
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Vehicle VIN or Year/Make/Model</label>
+                <input type="text" class="form-control" placeholder="e.g. 2024 Toyota Camry 2.5L I4">
+              </div>
+              <div class="form-group">
+                <label>Subject</label>
+                <select class="form-control">
+                  <option>Fitment Confirmation Inquiry</option>
+                  <option>Order Shipping & Logistics Update</option>
+                  <option>Warranty Claim or Part Exchange</option>
+                  <option>Bulk Dealership Order</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Message *</label>
+                <textarea class="form-control" rows="4" required placeholder="Provide details about the part or query..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-accent btn-block"><i class="fa-solid fa-paper-plane"></i> Transmit Message</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- PRODUCT DETAIL MODAL (QUICK VIEW) -->
+  <div id="productDetailModal" class="modal-backdrop">
+    <div class="modal-dialog modal-lg">
+      <button class="modal-close" onclick="closeProductModal()">&times;</button>
+      <div class="product-modal-content" id="productModalDetails">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- VEHICLE SELECTION GARAGE MODAL -->
+  <div id="vehicleSelectorModal" class="modal-backdrop">
+    <div class="modal-dialog modal-md">
+      <button class="modal-close" onclick="closeVehicleModal()">&times;</button>
+      <div class="vehicle-modal-inner">
+        <div class="modal-head">
+          <i class="fa-solid fa-car-rear text-accent"></i>
+          <div>
+            <h3>Select or Add Vehicle</h3>
+            <p>Ensure every replacement part fits your specific chassis</p>
+          </div>
+        </div>
+
+        <div class="saved-garage-list">
+          <label class="filter-title">Vehicles in Your Garage:</label>
+          <div id="modalSavedVehicles" class="modal-garage-pills">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <div class="divider"><span>OR ADD A VEHICLE</span></div>
+
+        <form id="modalVehicleForm" onsubmit="handleSaveVehicleFromModal(event)">
+          <div class="form-row">
+            <div class="form-group third">
+              <label>Year</label>
+              <select id="modalVehicleYear" class="form-control" required onchange="populateModalModels()">
+                <option value="">Year</option>
+                <option value="2026">2026</option>
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+              </select>
+            </div>
+            <div class="form-group third">
+              <label>Make</label>
+              <select id="modalVehicleMake" class="form-control" required onchange="populateModalModels()">
+                <option value="">Make</option>
+                <option value="Toyota">Toyota</option>
+                <option value="Honda">Honda</option>
+                <option value="Ford">Ford</option>
+                <option value="Chevrolet">Chevrolet</option>
+                <option value="BMW">BMW</option>
+                <option value="Hyundai">Hyundai</option>
+              </select>
+            </div>
+            <div class="form-group third">
+              <label>Model</label>
+              <select id="modalVehicleModel" class="form-control" required>
+                <option value="">Select Make First</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-accent btn-block"><i class="fa-solid fa-check"></i> Set Active Vehicle & Filter</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE-OUT SHOPPING CART DRAWER -->
+  <div id="cartDrawerBackdrop" class="cart-backdrop" onclick="closeCartDrawer()"></div>
+  <aside id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+      <div class="cart-title">
+        <i class="fa-solid fa-cart-shopping text-accent"></i>
+        <h3>Your Shopping Cart (<span id="drawerCartCount">0</span>)</h3>
+      </div>
+      <button class="cart-close" onclick="closeCartDrawer()">&times;</button>
+    </div>
+
+    <!-- Free Shipping Progress Bar -->
+    <div class="shipping-progress-box">
+      <div class="shipping-progress-text" id="freeShippingStatus">
+        Add <strong>$75.00</strong> more for Free Shipping!
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="shippingProgressBar" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <div class="cart-items-body" id="cartDrawerItems">
+      <!-- Dynamically filled with cart items -->
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-subtotal-row">
+        <span>Subtotal</span>
+        <span id="cartDrawerSubtotal">$0.00</span>
+      </div>
+      <p class="cart-tax-notice">Taxes & calculated freight finalized during checkout.</p>
+      <div class="cart-actions">
+        <button class="btn btn-accent btn-block btn-lg" onclick="proceedToCheckout()"><i class="fa-solid fa-lock"></i> Proceed to Checkout</button>
+        <button class="btn btn-outline btn-block" onclick="closeCartDrawer(); filterByCategory('all');">Continue Browsing</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastNotification" class="toast">
+    <i class="fa-solid fa-circle-check toast-icon"></i>
+    <span id="toastMessage">Item added to cart!</span>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-col brand-col">
+        <div class="nav-brand">
+          <i class="fa-solid fa-gears logo-icon text-accent"></i>
+          <div class="brand-text">
+            <span class="brand-name text-white">AUTO<span class="text-accent">ZONE</span></span>
+            <span class="brand-sub">PARTS & ACCESSORIES</span>
+          </div>
+        </div>
+        <p class="footer-desc">
+          High-performance replacement components, diagnostics, brake systems, fluids, and interior styling for vehicles worldwide.
+        </p>
+        <div class="footer-socials">
+          <a href="#"><i class="fa-brands fa-github"></i></a>
+          <a href="#"><i class="fa-brands fa-youtube"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="#"><i class="fa-brands fa-twitter"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Department Categories</h4>
+        <ul class="footer-links">
+          <li><a href="#engine" onclick="filterByCategory('engine')">Engine Components</a></li>
+          <li><a href="#brakes" onclick="filterByCategory('brakes')">Brakes, Rotors & Tires</a></li>
+          <li><a href="#lighting" onclick="filterByCategory('lighting')">Lighting & Batteries</a></li>
+          <li><a href="#accessories" onclick="filterByCategory('accessories')">Floor Mats & Accessories</a></li>
+          <li><a href="#catalog" onclick="filterByCategory('all')">View Complete Inventory</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Customer Care</h4>
+        <ul class="footer-links">
+          <li><a href="#track" onclick="navigateTo('tracking')">Track Real-time Order</a></li>
+          <li><a href="#account" onclick="navigateTo('account')">My Vehicles & Garage</a></li>
+          <li><a href="#about" onclick="navigateTo('about')">About AutoZone</a></li>
+          <li><a href="#contact" onclick="navigateTo('contact')">Mechanical Helpdesk</a></li>
+          <li><a href="https://www.freeinternships.in/blog/" target="_blank">Task Submission Blog</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Internship Details</h4>
+        <div class="task-info-card">
+          <span class="task-pill">Task ID: WD-EC-006</span>
+          <p><strong>Company:</strong> Data Alcott Systems</p>
+          <p><strong>Internship:</strong> Free Web Development Internship Online</p>
+          <p><strong>Framework:</strong> Vanilla HTML5, CSS3, ES6 JavaScript</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>&copy; 2026 AutoZone & Data Alcott Systems. All rights reserved. Built for Free Web Development Internship Task WD-EC-006.</p>
+        <div class="footer-legal">
+          <a href="#about" onclick="navigateTo('about')">Privacy Policy</a>
+          <a href="#about" onclick="navigateTo('about')">Terms of Service</a>
+          <a href="https://www.freeinternships.in/blog/" target="_blank">Submit Task Post</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
